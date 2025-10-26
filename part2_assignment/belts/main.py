@@ -1,36 +1,4 @@
 #!/usr/bin/env python3
-"""
-belts/main.py
-
-Reads JSON from stdin and writes JSON to stdout. Solves the "Belts with Bounds and Node Caps" problem.
-
-Input JSON format expected (flexible but fields must exist):
-{
-  "edges": [ {"from":"a","to":"b","lo":0,"hi":100}, ... ],
-  "sources": {"s1":900, "s2":600, ...},
-  "sink": "sink",
-  "node_caps": {"a":200, "b":500, ...}   # optional
-}
-
-Output (success):
-{
-  "status": "ok",
-  "max_flow_per_min": 1500,
-  "flows": [ {"from":"s1","to":"a","flow":900}, ... ]
-}
-
-Output (infeasible):
-{
-  "status": "infeasible",
-  "cut_reachable": [...],
-  "deficit": {"demand_balance": 300, "tight_nodes": [...], "tight_edges": [ {"from":...,"to":...,"flow_needed":300} ] }
-}
-
-This implementation uses a deterministic Dinic max-flow (neighbors visited in insertion / sorted order)
-and follows the lower-bound -> circulation -> supply->sink procedure described in the assignment.
-
-No extra prints.
-"""
 
 import sys
 import json
@@ -324,3 +292,4 @@ if __name__ == '__main__':
     except Exception as e:
         out = {'status':'infeasible', 'cut_reachable': [], 'deficit': {'demand_balance': 0.0, 'tight_nodes': [], 'tight_edges': [str(e)]}}
     write_output(out)
+
